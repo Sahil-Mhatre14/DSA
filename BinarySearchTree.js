@@ -107,7 +107,7 @@ class BinarySearchTree {
         queue.push(currentNode.right);
       }
     }
-    return list
+    return list;
   }
 
   breadthFirstSearchRecursive(queue, list) {
@@ -116,16 +116,64 @@ class BinarySearchTree {
     }
     const currentNode = queue.shift();
     list.push(currentNode.value);
-    
+
     if (currentNode.left) {
       queue.push(currentNode.left);
     }
     if (currentNode.right) {
       queue.push(currentNode.right);
     }
-    
+
     return this.breadthFirstSearchRecursive(queue, list);
   }
+
+  DFSInOrder() {
+    return traverseInOrder(this.root, []);
+  }
+
+  DFSPreOrder() {
+    return traversePreOrder(this.root, []);
+  }
+
+  DFSPostOrder() {
+    return traversePostOrder(this.root, []);
+  }
+}
+
+function traverseInOrder(node, list) {
+  if (node.left) {
+    traverseInOrder(node.left, list);
+  }
+  list.push(node.value);
+  if (node.right) {
+    traverseInOrder(node.right, list);
+  }
+  return list;
+}
+
+function traversePreOrder(node, list) {
+  list.push(node.value);
+  if (node.left) {
+    traversePreOrder(node.left, list);
+  }
+
+  if (node.right) {
+    traversePreOrder(node.right, list);
+  }
+  return list;
+}
+
+function traversePostOrder(node, list) {
+  if (node?.left) {
+    traversePostOrder(node?.left, list);
+  }
+
+  if (node?.right) {
+    traversePostOrder(node?.right, list);
+  }
+  list.push(node?.value);
+
+  return list;
 }
 
 const tree = new BinarySearchTree();
@@ -139,8 +187,12 @@ tree.insert(1);
 tree.remove(170);
 console.log("Tree", JSON.stringify(traverse(tree.root)));
 console.log("Node", tree.lookup(20));
-console.log('BFS traversal', tree.breadthFirstSearch())
-console.log('Recursive BFS', tree.breadthFirstSearchRecursive([tree.root], [] ))
+console.log("BFS traversal", tree.breadthFirstSearch());
+console.log("Recursive BFS", tree.breadthFirstSearchRecursive([tree.root], []));
+console.log("DFS Post order traversal", tree.DFSPostOrder());
+console.log("DFS In order traversal", tree.DFSInOrder());
+console.log("DFS Pre order traversal", tree.DFSPreOrder());
+
 //     9
 //  4     20
 //1  6  15  170
